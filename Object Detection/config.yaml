@@ -1,0 +1,10 @@
+# yaml file for training YOLOv8
+
+train: /home/nirob/Documents/dlenigma1/BadODD/images/aug
+val : /home/nirob/Documents/dlenigma1/BadODD/images/val
+test: /home/nirob/Documents/dlenigma1/BadODD/images/test
+nc: 13  # number of classes
+names: ['auto_rickshaw', 'bicycle', 'bus', 'car', 'cart_vehicle', 'construction_vehicle', 'motorbike', 'person', 'priority_vehicle', 'three_wheeler', 'train', 'truck', 'wheelchair']  # class names
+mosaic: True
+mosaic_bound : 6
+
