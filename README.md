@@ -1,4 +1,36 @@
 
+### 12. What is the process for adding data augmentation to the pipeline?
+
+**Description:**  
+Data augmentation is a technique used to artificially expand the training dataset by applying transformations to the images. It helps improve model generalization by exposing it to varied versions of the same data, thereby reducing overfitting and improving robustness.
+
+To enable data augmentation in the pipeline, follow these steps:
+
+1. Set `augment = True` in the `config.py` file.
+2. The pipeline currently includes the following augmentation techniques:
+   - **VerticalFlip**: Flips the image vertically with a certain probability.
+   - **HorizontalFlip**: Flips the image horizontally with a certain probability.
+   - **RandomRotate90**: Rotates the image by 90 degrees randomly.
+   - **Blur**: Applies a blur effect to the image.
+
+3. To add more augmentation techniques, you can modify the `Augment` class located in the `dataset.py` file. Incorporate additional augmentation methods as needed to enhance the variability of your dataset.
+
+**Example:**
+```python
+self.aug = A.Compose(
+    [
+        A.VerticalFlip(p=0.5),
+        A.HorizontalFlip(p=0.5),
+        A.RandomRotate90(p=0.5),
+        A.Blur(p=0.5),
+        A.CLAHE(p=0.5),  # Contrast Limited Adaptive Histogram Equalization
+        A.ColorJitter(p=0.5),  # Random changes in brightness, contrast, saturation, and hue
+    ]
+)
+```
+
+By enabling and customizing augmentations, you can adapt the pipeline to specific requirements, improving the diversity and quality of training data for better model performance.
+
 ### 13. What is class balance threshold and how can I control it during training?
 
 The class balance threshold determines the minimum percentage of the positive class that must be present in a patch image for it to be included in the training process. Any patch with a positive class proportion lower than the threshold will be discarded and not used for training.
