@@ -1,3 +1,21 @@
+
+### 13. What is class balance threshold and how can I control it during training?
+
+The class balance threshold determines the minimum percentage of the positive class that must be present in a patch image for it to be included in the training process. Any patch with a positive class proportion lower than the threshold will be discarded and not used for training.
+
+To adjust the class balance threshold, modify the `class_balance_threshold` variable in the `config.py` file based on your requirements. This provides flexibility in controlling the inclusion criteria for patch images during training.
+
+```python
+# Example configuration in config.py
+class_balance_threshold = 20  # 20% positive class required in a patch
+```
+
+- If `class_balance_threshold = 20`, only patches where the positive class (e.g., foreground pixels) covers **at least 20%** of the patch will be used for training.  
+- If a patch has a positive class proportion of 15%, it will be discarded.
+- If a patch has a positive class proportion of 25%, it will be included in the training set.
+
+This mechanism ensures that patches with insufficient positive samples are excluded, improving the training process by focusing on meaningful patches.
+
 ### 14. How do I check the number of patches created during data preprocessing?
 
 The number of patches created during preprocessing is determined using the formula:
