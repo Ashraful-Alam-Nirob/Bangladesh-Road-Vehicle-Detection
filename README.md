@@ -1,12 +1,10 @@
 
 ## 15. What is the significance of the CSV and JSON files, and what information do they typically contain?
 
-CSV and JSON files organize the dataset for training, testing, and evaluation. The CSV file contains the directories for the training, testing, and validation images. It serves as a reference for locating the dataset split during the training process, while JSON files store patch metadata, including source image details and patch coordinates.
+CSV and JSON files organize the dataset for training, testing, and evaluation. The CSV file contains the directories for the training, testing, and validation images where each CSV file contains `feature_ids` and `masks`, where `feature_ids` represent the original images and `masks` represent the ground truth of the data. It serves as a reference for locating the dataset split during the training process, while JSON files store patch metadata, including source image details and patch coordinates.
 
 The JSON file contains details about patches such as their coordinates and corresponding source images. For example:
-```csv
-{"feature_ids","masks"}
-```
+
 ```json
 {
   "feature_ids": ["image1.jpg", "image1.jpg"],
@@ -16,7 +14,6 @@ The JSON file contains details about patches such as their coordinates and corre
 ```
 These files ensure proper data handling during training and preprocessing, avoiding errors due to inconsistencies.
 
----
 
 ## 16. How can I randomly or selectively plot data samples during training?
 
