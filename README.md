@@ -2,9 +2,7 @@
 
 The number of patches created during preprocessing is determined using the formula:
 
-\[
-\text{number\_of\_patches} = \left\lceil \frac{\text{height} - \text{patch\_size}}{\text{stride}} + 1 \right\rceil \times \left\lceil \frac{\text{width} - \text{patch\_size}}{\text{stride}} + 1 \right\rceil
-\]
+$$\text{number_of_patches} = \left\lceil\frac{\text{height} - \text{patch_size}}{\text{stride}} + 1\right\rceil \times \left\lceil\frac{\text{width} - \text{patch_size}}{\text{stride}} + 1\right\rceil$$
 
 These patches are further processed and evaluated against the class balance threshold if `patch_class_balance` is set to `True` in the `config.py` file. All generated patches and their corresponding metadata are saved in the JSON file.
 
