@@ -1,3 +1,14 @@
+### 14. How do I check the number of patches created during data preprocessing?
+
+The number of patches created during preprocessing is determined using the formula:
+
+\[
+\text{number\_of\_patches} = \left\lceil \frac{\text{height} - \text{patch\_size}}{\text{stride}} + 1 \right\rceil \times \left\lceil \frac{\text{width} - \text{patch\_size}}{\text{stride}} + 1 \right\rceil
+\]
+
+These patches are further processed and evaluated against the class balance threshold if `patch_class_balance` is set to `True` in the `config.py` file. All generated patches and their corresponding metadata are saved in the JSON file.
+
+To count the patches, use the `number_of_patches()` function available in the `visualization.ipynb` file. This function reads the JSON file and calculates the total number of patches based on the metadata. Proper evaluation of patches ensures alignment with training requirements and dataset consistency.
 
 ## 15. What is the significance of the CSV and JSON files, and what information do they typically contain?
 
