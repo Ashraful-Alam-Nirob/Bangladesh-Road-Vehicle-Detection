@@ -1,7 +1,6 @@
 
 ### 12. What is the process for adding data augmentation to the pipeline?
-
-**Description:**  
+  
 Data augmentation is a technique used to artificially expand the training dataset by applying transformations to the images. It helps improve model generalization by exposing it to varied versions of the same data, thereby reducing overfitting and improving robustness.
 
 To enable data augmentation in the pipeline, follow these steps:
