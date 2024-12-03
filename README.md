@@ -1,7 +1,7 @@
 
 ## 15. What is the significance of the CSV and JSON files, and what information do they typically contain?
 
-CSV and JSON files organize the dataset for training, testing, and evaluation. CSV files manage dataset splits, while JSON files store patch metadata, including source image details and patch coordinates.
+CSV and JSON files organize the dataset for training, testing, and evaluation. The CSV file contains the directories for the training, testing, and validation images. It serves as a reference for locating the dataset split during the training process, while JSON files store patch metadata, including source image details and patch coordinates.
 
 The CSV file includes directories for training, testing, and validation images. The JSON file contains details about patches such as their coordinates and corresponding source images. For example:
 ```json
