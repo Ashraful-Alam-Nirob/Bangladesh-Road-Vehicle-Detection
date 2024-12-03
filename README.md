@@ -3,7 +3,10 @@
 
 CSV and JSON files organize the dataset for training, testing, and evaluation. The CSV file contains the directories for the training, testing, and validation images. It serves as a reference for locating the dataset split during the training process, while JSON files store patch metadata, including source image details and patch coordinates.
 
-The CSV file includes directories for training, testing, and validation images. The JSON file contains details about patches such as their coordinates and corresponding source images. For example:
+The JSON file contains details about patches such as their coordinates and corresponding source images. For example:
+```csv
+{"feature_ids","masks"}
+```
 ```json
 {
   "feature_ids": ["image1.jpg", "image1.jpg"],
