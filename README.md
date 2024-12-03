@@ -2,7 +2,7 @@
 
 The number of patches created during preprocessing is determined using the formula:
 
-![Equation]([https://latex.codecogs.com/png.latex?%5Ctext%7Bnumber_of_patches%7D%20%3D%20%5Cleft%5Clceil%20%5Cfrac%7B%5Ctext%7Bheight%7D%20-%20%5Ctext%7Bpatch_size%7D%7D%7B%5Ctext%7Bstride%7D%7D%20%2B%201%20%5Cright%5Clceil%20%5Ctimes%20%5Cleft%5Clceil%20%5Cfrac%7B%5Ctext%7Bwidth%7D%20-%20%5Ctext%7Bpatch_size%7D%7D%7B%5Ctext%7Bstride%7D%7D%20%2B%201%20%5Cright%5Clceil](https://latex.codecogs.com/svg.image?$$\text{number\_of\_patches}=\left\lceil\frac{\text{height}-\text{patch\_size}}{\text{stride}}&plus;1\right\rceil\times\left\lceil\frac{\text{width}-\text{patch\_size}}{\text{stride}}&plus;1\right\rceil$$))
+![Equation](https://latex.codecogs.com/svg.image?$$\text{number\_of\_patches}=\left\lceil\frac{\text{height}-\text{patch\_size}}{\text{stride}}&plus;1\right\rceil\times\left\lceil\frac{\text{width}-\text{patch\_size}}{\text{stride}}&plus;1\right\rceil$$)
 
 These patches are further processed and evaluated against the class balance threshold if `patch_class_balance` is set to `True` in the `config.py` file. All generated patches and their corresponding metadata are saved in the JSON file.
 
