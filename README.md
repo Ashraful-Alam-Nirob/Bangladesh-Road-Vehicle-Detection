@@ -1,4 +1,55 @@
 
+### 10. What steps are required to load a pre-trained model into the pipeline?
+
+To load a pre-trained model into the pipeline, ensure the following steps are completed:
+
+1. **Enable Transfer Learning:**  
+   In the `config.py` file, set the `transfer_lr` variable to `True` to enable transfer learning:
+   ```python
+   transfer_lr = True
+   ```
+
+2. **Specify the Pre-trained Model Name:**  
+   Provide the name of the pre-trained model in the `load_model_name` variable:
+   ```python
+   load_model_name = 'unet_ex_2024-12-02_e_10_p_2048_s_1024_nir.keras'
+   ```
+
+3. **Set the Model Directory Path:**  
+   The pipeline automatically searches for the pre-trained model in the `logs/model/<model_name>` directory. Ensure that `load_model_dir` in the `config.py` is correctly defined:
+   ```python
+   load_model_dir = root_dir / "logs/model" / model_name
+   ```
+
+4. **Model Compatibility:**  
+   Ensure that the pre-trained model's architecture matches the architecture defined by the `model_name` variable in `config.py`. For instance:
+   ```python
+   model_name = "unet"  # The architecture of the pre-trained model must match this
+   ```
+
+5. **Prediction Directories:**  
+   Once the pre-trained model is loaded, predictions during testing, evaluation, and validation phases are saved in the following directories:
+   - For testing: 
+     ```
+     root_dir/logs/prediction/<model_name>/test/<experiment_name>
+     ```
+   - For evaluation: 
+     ```
+     root_dir/logs/prediction/<model_name>/eval/<experiment_name>
+     ```
+   - For validation:
+     ```
+     root_dir/logs/prediction/<model_name>/validation/<experiment_name>
+     ```
+
+6. **Experiment Tracking:**  
+   The `experiment` variable in `config.py` tracks the current experiment and ensures proper logging of model predictions and checkpoints:
+   ```python
+   experiment = f"{str(date.today())}_e_{epochs}_p_{patch_size}_s_{stride}_{dir_name}"
+   ```
+
+When these configurations are correctly set, the pipeline will automatically load the specified pre-trained model and perform transfer learning. This approach leverages pre-trained weights for faster convergence and improved performance on specific tasks.
+
 ### 12. What is the process for adding data augmentation to the pipeline?
   
 Data augmentation is a technique used to artificially expand the training dataset by applying transformations to the images. It helps improve model generalization by exposing it to varied versions of the same data, thereby reducing overfitting and improving robustness.
