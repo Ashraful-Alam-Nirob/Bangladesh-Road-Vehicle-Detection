@@ -17,28 +17,36 @@ These files ensure proper data handling during training and preprocessing, avoid
 
 ## 16. How can I randomly or selectively plot data samples during training?
 
-To plot data samples during training, the `index` variable in `config.py` controls the behavior:
+Plotting data samples during training helps verify preprocessing, augmentations, and dataset integrity. The behavior is controlled by the `index` variable in `config.py`:
 ```python
 index = "random"  # For random plotting
 ```
-Setting `index = 1` allows selective plotting of the first validation sample, while `index = "random"` enables plotting of random samples during training. This helps inspect preprocessing and dataset integrity dynamically.
+- Set `index = 1` to plot the first validation sample consistently.
+- Set `index = "random"` to plot samples randomly during training.
+
+The plots can be found in the directory:
+```
+root/logs/prediction/model_name/validation/experiment_name.jpg
+```
 
 ---
 
 ## 17. How can I control the data split for training, validation, and testing?
 
-The dataset can be split into training, validation, and testing subsets by adjusting the following variables in `config.py`:
+Controlling the data split allows you to allocate specific proportions of the dataset for training, validation, and testing, ensuring proper evaluation and model performance.
+
+In `config.py`, adjust the following variables:
 ```python
 train_size = 0.8  # 80% of the data for training
 test_size = 0.5   # 10% for testing and 10% for validation (remaining after training)
 ```
-These settings ensure the desired distribution of data, improving model evaluation consistency.
+This ensures data is divided as required, with the remaining portion allocated for validation and testing.
 
 ---
 
 ## 18. What steps are required to add additional performance metrics to the training process?
 
-In the `metrics.py` file, performance metrics such as **Mean IoU** and **Dice Coefficient** are defined. To add new metrics, update the `get_metrics()` function. For example:
+Adding performance metrics allows for a more comprehensive evaluation of the model. Metrics like **Mean IoU** and **Dice Coefficient** are defined in the `metrics.py` file. To add new metrics, modify the `get_metrics()` function in `metrics.py`:
 ```python
 def get_metrics():
     return {
@@ -47,4 +55,5 @@ def get_metrics():
         "dice_coef_score": dice_coef_score,
     }
 ```
-Including additional metrics allows for comprehensive evaluation of model performance during training and validation.
+
+These additional metrics will be calculated during training and validation, providing deeper insights into model performance.
