@@ -300,7 +300,7 @@ To count the patches, use the `number_of_patches()` function available in the `v
 
 ## 14. What is the significance of the CSV and JSON files, and what information do they typically contain?
 
-CSV and JSON files organize the dataset for training, testing, and evaluation. The CSV file contains the directories for the training, testing, and validation images where each CSV file contains `feature_ids` and `masks`, where `feature_ids` represent the original images and `masks` represent the ground truth of the data. It serves as a reference for locating the dataset split during the training process, while JSON files store patch metadata, including source image details and patch coordinates.
+CSV and JSON files organize the dataset for training, testing, and evaluation. The CSV file contains the directories for the training, testing, and validation images where each CSV file contains **`feature_ids`** and **`masks`**, where **`feature_ids`** represent the original images and **`masks`** represent the ground truth of the data. It serves as a reference for locating the dataset split during the training process, while JSON files store patch metadata, including source image details and patch coordinates.
 
 The JSON file contains details about patches such as their coordinates and corresponding source images. For example:
 
@@ -410,7 +410,7 @@ After confirming the structure, proceed with the steps below:
    - `train_df`: The training dataset DataFrame created in Step 1.
    - `"train_phr_cb"`: The naming convention for the generated JSON file.
 
-2. Ensure patching parameters (`patch_size`, `stride`, `class_balance_threshold`) are correctly configured in the `config.py` file, as detailed in **Question 12**.
+2. Ensure patching parameters (`patch_size`, `stride`, `class_balance_threshold`) are correctly configured in the `config.py` file, as detailed in **Question 12**, **Question 13**.
 
 
 ### **Step 3: Configure Class Balance Weights**
@@ -455,13 +455,13 @@ After confirming the structure, proceed with the steps below:
    ```
 
 
-### Summary of Configuration Steps
+<!--### Summary of Configuration Steps
 
 1. **Ensure dataset structure is correct.**
 2. **Generate train, test, and validation datasets** using the `data_csv_gen()` function.
 3. **Patch images and generate JSON files** using the `patch_images()` function.
 4. **Enable class balance weights** and configure them using the `class_balance_check()` function.
 5. **Validate image dimensions** and adjust patch size and resolution settings in `config.py`.
-6. **Calculate and configure mean and standard deviation** for normalization.
+6. **Calculate and configure mean and standard deviation** for normalization. -->
 
 By following these steps, your `config.py` file will be properly configured to handle your dataset efficiently, ensuring smooth execution of the pipeline.
