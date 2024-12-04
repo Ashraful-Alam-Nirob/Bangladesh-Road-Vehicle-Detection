@@ -196,6 +196,33 @@ In this example:
 
 This ensures that the model is correctly configured for the number of classes in your dataset.
 
+### **9. How can I incorporate large-scale images into the pipeline?**
+
+Large-scale images must be tiled to ensure they fit within memory constraints and allow efficient processing during training. For large-scale images, you can use the `save_tiles` function in the `visualization.ipynb` file. This function splits large images into smaller tiles, making them manageable for training and visualization.
+
+#### **Function Syntax**
+```python
+save_tiles(path, out_path, tiles_size=2048, stride=1024)
+```
+
+#### **Parameters**
+- `path`: The directory containing the large images.
+- `out_path`: The directory where the smaller tiles will be saved.
+- `tiles_size`: The size of each tile (e.g., `2048x2048` pixels).
+- `stride`: The overlap between consecutive tiles (e.g., `1024` pixels).
+
+#### **Example**
+```python
+path = "data/large_images/"          # Directory with large images
+out_path = "data/tiles/"             # Directory to save the tiles
+tiles_size = 2048                    # Each tile will be 2048x2048 pixels
+stride = 1024                        # Tiles will overlap by 1024 pixels
+
+save_tiles(path, out_path, tiles_size, stride)
+```
+  
+Using `save_tiles` allows efficient handling of large images by dividing them into manageable tiles, enabling seamless training and visualization.
+
 ### **10. What happens if `transfer_lr` is set to `False` and `load_model_name` is specified?**
 
 To enable transfer learning, `transfer_lr` must be set to `True`. Otherwise, the pipeline will proceed with **fine-tuning** if a pre-trained model is specified.
