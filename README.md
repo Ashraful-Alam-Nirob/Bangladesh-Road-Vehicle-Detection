@@ -237,7 +237,7 @@ load_model_name = "unet_ex_2024-12-03_e_2_p_2048_s_1024_vh-vv.keras"  # Load mod
 
 If `load_model_name` is not provided, the model will be trained from scratch.
 
-### 12. What is the process for adding data augmentation to the pipeline?
+### 11. What is the process for adding data augmentation to the pipeline?
   
 Data augmentation is a technique used to artificially expand the training dataset by applying transformations to the images. It helps improve model generalization by exposing it to varied versions of the same data, thereby reducing overfitting and improving robustness.
 
@@ -268,7 +268,7 @@ self.aug = A.Compose(
 
 By enabling and customizing augmentations, you can adapt the pipeline to specific requirements, improving the diversity and quality of training data for better model performance.
 
-### 13. What is class balance threshold and how can I control it during training?
+### 12. What is class balance threshold and how can I control it during training?
 
 The class balance threshold determines the minimum percentage of the positive class that must be present in a patch image for it to be included in the training process. Any patch with a positive class proportion lower than the threshold will be discarded and not used for training.
 
@@ -285,7 +285,7 @@ class_balance_threshold = 20  # 20% positive class required in a patch
 
 This mechanism ensures that patches with insufficient positive samples are excluded, improving the training process by focusing on meaningful patches.
 
-### 14. How do I check the number of patches created during data preprocessing?
+### 13. How do I check the number of patches created during data preprocessing?
 
 The number of patches created during preprocessing is determined using the formula:
 
@@ -298,7 +298,7 @@ These patches are further processed and evaluated against the class balance thre
 To count the patches, use the `number_of_patches()` function available in the `visualization.ipynb` file. This function reads the JSON file and calculates the total number of patches based on the metadata. Proper evaluation of patches ensures alignment with training requirements and dataset consistency.
 
 
-## 15. What is the significance of the CSV and JSON files, and what information do they typically contain?
+## 14. What is the significance of the CSV and JSON files, and what information do they typically contain?
 
 CSV and JSON files organize the dataset for training, testing, and evaluation. The CSV file contains the directories for the training, testing, and validation images where each CSV file contains `feature_ids` and `masks`, where `feature_ids` represent the original images and `masks` represent the ground truth of the data. It serves as a reference for locating the dataset split during the training process, while JSON files store patch metadata, including source image details and patch coordinates.
 
@@ -314,7 +314,7 @@ The JSON file contains details about patches such as their coordinates and corre
 These files ensure proper data handling during training and preprocessing, avoiding errors due to inconsistencies.
 
 
-## 16. How can I randomly or selectively plot data samples during training?
+## 15. How can I randomly or selectively plot data samples during training?
 
 Plotting data samples during training helps verify preprocessing, augmentations, and dataset integrity. The behavior is controlled by the `index` variable in `config.py`:
 ```python
@@ -330,7 +330,7 @@ root/logs/prediction/model_name/validation/experiment_name.jpg
 
 ---
 
-## 17. How can I control the data split for training, validation, and testing?
+## 16. How can I control the data split for training, validation, and testing?
 
 Controlling the data split allows you to allocate specific proportions of the dataset for training, validation, and testing, ensuring proper evaluation and model performance.
 
@@ -343,7 +343,7 @@ This ensures data is divided as required, with the remaining portion allocated f
 
 ---
 
-## 18. What steps are required to add additional performance metrics to the training process?
+## 17. What steps are required to add additional performance metrics to the training process?
 
 Adding performance metrics allows for a more comprehensive evaluation of the model. Metrics like **Mean IoU** and **Dice Coefficient** are defined in the `metrics.py` file. To add new metrics, modify the `get_metrics()` function in `metrics.py`:
 ```python
