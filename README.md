@@ -103,8 +103,8 @@ You can compute class weights using the `class_balance_check` function in the `v
    Here, 27.75% of pixels belong to Class 1 and 72.25% to Class 2.
 
 3. Assign weights inversely proportional to these percentages. For instance:
-   - Weight for Class 1: \( 72.25 / 10 \approx 7.2 \)
-   - Weight for Class 2: \( 27.75 / 10 \approx 2.7 \)
+   - Weight for Class 1: \( 72.25 / 10 ~ 7.2 \)
+   - Weight for Class 2: \( 27.75 / 10 ~ 2.7 \)
    ```python
    balance_weights = [7.2, 2.7]
    ```
