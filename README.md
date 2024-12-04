@@ -328,8 +328,6 @@ The plots can be found in the directory:
 root/logs/prediction/model_name/validation/experiment_name.jpg
 ```
 
----
-
 ## 16. How can I control the data split for training, validation, and testing?
 
 Controlling the data split allows you to allocate specific proportions of the dataset for training, validation, and testing, ensuring proper evaluation and model performance.
@@ -341,7 +339,6 @@ test_size = 0.5   # 10% for testing and 10% for validation (remaining after trai
 ```
 This ensures data is divided as required, with the remaining portion allocated for validation and testing.
 
----
 
 ## 17. What steps are required to add additional performance metrics to the training process?
 
@@ -356,3 +353,21 @@ def get_metrics():
 ```
 
 These additional metrics will be calculated during training and validation, providing deeper insights into model performance.
+### **FAQ: How can I visualize the dataset?**
+
+Visualizing the dataset before training is a common practice in deep learning. To visualize the dataset, you can use the `display_all` function in the `visualization.ipynb` file.
+
+#### **Example Usage:**
+```python
+display_all(
+    data=train_df,
+    name="train",
+    visualization_dir=visualization_dir
+)
+```
+Set the Visualization Directory
+```python
+visualization_dir = pathlib.Path("/home/nirob/Documents/rice crop segmentation/rice_crop/logs/display_all")
+```
+
+This function generates and saves visualizations, allowing you to inspect your dataset before training.
