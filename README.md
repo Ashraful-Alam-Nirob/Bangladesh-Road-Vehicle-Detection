@@ -180,8 +180,6 @@ class pixel: 1.0 = 27.747506680695906
 class pixel: 2.0 = 72.2524933193041
 Unique value in the mask dict_keys([1.0, 2.0])
 ```
-
-#### **Interpreting the Output**
 In this example:
 - The dataset contains **2 unique classes** (1.0 and 2.0).
 - Update the `config.py` file accordingly:
