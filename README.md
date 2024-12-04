@@ -353,11 +353,11 @@ def get_metrics():
 ```
 
 These additional metrics will be calculated during training and validation, providing deeper insights into model performance.
-### **FAQ: How can I visualize the dataset?**
+### **18. How can I visualize the dataset?**
 
-Visualizing the dataset before training is a common practice in deep learning. To visualize the dataset, you can use the `display_all` function in the `visualization.ipynb` file.
+Visualizing the dataset before training is a common practice in deep learning. To visualize the dataset, use the `display_all` function in the `visualization.ipynb` file.
 
-#### **Example Usage:**
+#### **Example:**
 ```python
 display_all(
     data=train_df,
@@ -365,9 +365,12 @@ display_all(
     visualization_dir=visualization_dir
 )
 ```
-Set the Visualization Directory
+
+*For test dataset, pass `data=test_df` with `name="test"`, and similarly for validation.*
+
+#### **Set the Visualization Directory:**
 ```python
-visualization_dir = pathlib.Path("/home/nirob/Documents/rice crop segmentation/rice_crop/logs/display_all")
+visualization_dir = pathlib.Path("path_where_you_want_to_store_plots")
 ```
 
-This function generates and saves visualizations, allowing you to inspect your dataset before training.
+This function generates and saves visualizations, enabling you to inspect your dataset effectively before training.
