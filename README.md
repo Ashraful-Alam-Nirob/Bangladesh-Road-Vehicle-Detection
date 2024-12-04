@@ -374,3 +374,94 @@ visualization_dir = pathlib.Path("path_where_you_want_to_store_plots")
 ```
 
 This function generates and saves visualizations, enabling you to inspect your dataset effectively before training.
+
+### 19. How can I configure the `config.py` file step by step for my dataset using the `visualization.ipynb` file?
+
+To configure the `config.py` file for your dataset, follow these systematic steps:
+
+### **Dataset Preparation**
+
+Ensure the dataset directory is correctly structured as follows:
+
+```
+data/
+└── dataset_type_or_name/   # Use a short and descriptive name
+    ├── groundtruth/        # Directory for ground truth masks
+    ├── input/              # Directory for input images
+```
+
+After confirming the structure, proceed with the steps below:
+
+### **Step 1: Generate Train, Test, and Validation Datasets**
+
+1. Open the `visualization.ipynb` file.
+2. Use the `data_csv_gen()` function to create CSV files for the train, test, and validation splits.
+   ```python
+   data_csv_gen()
+   ```
+3. These CSV files will contain paths to the input images and their corresponding masks, as explained in **Question 14**.
+
+### **Step 2: Patch Images and Create JSON Files**
+
+1. Use the `patch_images()` function to patch the dataset and generate a JSON file containing patch indices.
+   ```python
+   patch_images(train_df, "train_phr_cb")
+   ```
+   - `train_df`: The training dataset DataFrame created in Step 1.
+   - `"train_phr_cb"`: The naming convention for the generated JSON file.
+
+2. Ensure patching parameters (`patch_size`, `stride`, `class_balance_threshold`) are correctly configured in the `config.py` file, as detailed in **Question 12**.
+
+
+### **Step 3: Configure Class Balance Weights**
+
+1. If class balance weights are required, enable them in the `config.py` file:
+   ```python
+   weights = True
+   ```
+2. Use the `class_balance_check()` function to:
+   - Determine the unique classes in your dataset.
+   - Calculate appropriate weights for each class:
+     ```python
+     class_balance_check(patchify=True, data_dir=train_df)
+     ```
+3. Update the `balance_weights` and `num_classes` variables in the `config.py` file based on the output, as explained in **Question 5**.
+
+### **Step 4: Validate Image Dimensions**
+
+1. Run the `check_height_width()` function to inspect the dimensions of the dataset.
+   ```python
+   check_height_width(data_dir)
+   ```
+   - This step ensures that all images are consistent in height and width, and identifies any anomalies.
+
+2. Use this information to adjust the `patch_size`, `height`, and `width` variables in the `config.py` file, as explained in **Question 4**.
+
+### **Step 5: Calculate Mean and Standard Deviation**
+
+1. Use the `calculate_average()` function to compute the mean and standard deviation of your dataset:
+   ```python
+   mean, std_dev = calculate_average(features_path)
+   ```
+   - `features_path`: List of feature image paths from the dataset.
+
+2. Update the `mean_std` dictionary in the `config.py` file with the computed values:
+   ```python
+   mean_std = {
+       "dataset_name": [mean, std_dev]
+   }
+   mean = mean_std.get(dir_name)[0]
+   std = mean_std.get(dir_name)[1]
+   ```
+
+
+### Summary of Configuration Steps
+
+1. **Ensure dataset structure is correct.**
+2. **Generate train, test, and validation datasets** using the `data_csv_gen()` function.
+3. **Patch images and generate JSON files** using the `patch_images()` function.
+4. **Enable class balance weights** and configure them using the `class_balance_check()` function.
+5. **Validate image dimensions** and adjust patch size and resolution settings in `config.py`.
+6. **Calculate and configure mean and standard deviation** for normalization.
+
+By following these steps, your `config.py` file will be properly configured to handle your dataset efficiently, ensuring smooth execution of the pipeline.
