@@ -87,8 +87,6 @@ To handle class imbalance, class weights can be adjusted during training to ensu
 
 This approach adjusts the loss function to account for class proportions, improving performance on underrepresented classes while ignoring irrelevant ones.
 
----
-
 #### **Calculating Class Weights**
 You can compute class weights using the `class_balance_check` function in the `visualization.ipynb` file:
 1. Run the function with your training dataset:
@@ -108,10 +106,7 @@ You can compute class weights using the `class_balance_check` function in the `v
    ```python
    balance_weights = [7.2, 2.7]
    ```
-
----
-
-#### **Implementation Example**
+   
 Update the `config.py` file as follows:
 ```python
 weights = True
