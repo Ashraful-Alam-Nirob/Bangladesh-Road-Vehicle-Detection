@@ -1,3 +1,201 @@
+### **1. How can I plot results during the validation phase?**
+
+During the training process, validation occurs at configurable intervals, determined by the `val_plot_epoch` variable in the `config.py` file. For example, if `val_plot_epoch` is set to 3, validation will be performed after every 3 epochs. 
+
+The generated validation plots are automatically saved in the following directory:
+
+```
+root/logs/prediction/<model_name>/validation/<experiment_name>.jpg
+```
+
+Plotting can be further customized to allow **selective plotting** or **random plotting**. The process to achieve this is detailed in **Question 16**.
+
+This setup ensures systematic tracking and flexible visualization of model performance during validation.
+### 2. How can I visualize predictions during the testing phase?
+
+To visualize predictions during the testing phase, follow these steps:
+
+1. **Configure the Settings**: In the `config.py` file, ensure the following setting:
+    ```python
+    evaluation = False
+    ```
+   This ensures predictions are generated on the test dataset without performing evaluation.
+
+2. **Execute the Command**: Run the testing script.
+
+3. **Access the Plots**: The resulting prediction plots will be saved in the following directory:
+    ```
+    root_dir/logs/prediction/model_name/test/experiment
+    ```
+   - Replace `root_dir` with the root directory of your project.
+   - Replace `model_name` with the name of your model.
+   - Replace `experiment` with the specific testing experiment name.
+
+This setup allows you to generate and store visualized predictions for the test dataset.
+
+
+### 3. How can I visualize predictions during the evaluation phase?
+
+To visualize predictions during the evaluation phase, follow these steps:
+
+1. **Execute the Evaluation Script**: Run the `test.py` script and ensure that `evaluation = True` is set in the `config.py` file.
+
+2. **Generate Predictions**: The script will generate predictions using the evaluation dataset.
+
+3. **View Resulting Plots**: The resulting prediction plots will be automatically saved in the following folder structure:
+
+```
+root_dir/logs/prediction/model_name/eval/experiment
+```
+
+- Replace `root_dir` with the root directory of your project.
+- Replace `model_name` with the name of your model.
+- Replace `experiment` with the specific experiment or evaluation run.
+
+This allows you to visually assess the model's performance during evaluation.
+
+### **4. Why is it important to check for unique image heights and widths before training?**
+
+It is crucial to ensure that all images have the same shape before training to maintain consistency during preprocessing and avoid errors in patch creation. 
+
+During preprocessing, images are divided into smaller patches based on a specified patch size. If the patch size does not align correctly with the image dimensions, it can cause errors or inconsistent model performance. Ensuring uniform image dimensions and setting an appropriate patch size is essential for stable and effective training.
+
+To check the unique image heights and widths:
+1. Use the `check_height_width(data_dir)` function in the `visualization.py` file. This function will identify unique image dimensions in the dataset. 
+2. If the shapes vary throughout the dataset, set `patch_size = min(shape)` to ensure that the code runs smoothly. 
+3. Without this adjustment, mismatched shapes could pass into the model, leading to processing errors.
+
+Properly aligning image dimensions and patch size ensures the pipeline operates seamlessly.
+
+### **5. How can I adjust class weights to address class imbalance issues?**
+
+To handle class imbalance, class weights can be adjusted during training to ensure the model gives appropriate importance to underrepresented classes. Here's how:
+
+#### **Binary Classification**
+- For imbalanced datasets (e.g., one class has significantly more samples), enable class weighting by setting `weights = True` in the `config.py` file.
+- Define appropriate values for `balance_weights`. For example:
+  ```python
+  balance_weights = [4, 6]  # Class 0 gets a weight of 4, Class 1 gets a weight of 6
+  ```
+  These weights should be proportional to the class distributions.
+
+#### **Multi-class Classification**
+- In cases where one class should be ignored (e.g., a boundary class), set its weight to `0`. For example:
+  ```python
+  balance_weights = [4, 6, 0]  # Class 2 (boundary) is ignored
+  ```
+
+This approach adjusts the loss function to account for class proportions, improving performance on underrepresented classes while ignoring irrelevant ones.
+
+---
+
+#### **Calculating Class Weights**
+You can compute class weights using the `class_balance_check` function in the `visualization.ipynb` file:
+1. Run the function with your training dataset:
+   ```python
+   class_balance_check(patchify=False, data_dir=train_df)
+   ```
+2. Example output:
+   ```
+   class pixel: 1.0 = 27.747506680695906
+   class pixel: 2.0 = 72.2524933193041
+   ```
+   Here, 27.75% of pixels belong to Class 1 and 72.25% to Class 2.
+
+3. Assign weights inversely proportional to these percentages. For instance:
+   - Weight for Class 1: \( 72.25 / 10 \approx 7.2 \)
+   - Weight for Class 2: \( 27.75 / 10 \approx 2.7 \)
+   ```python
+   balance_weights = [7.2, 2.7]
+   ```
+
+---
+
+#### **Implementation Example**
+Update the `config.py` file as follows:
+```python
+weights = True
+balance_weights = [7.2, 2.7]
+```
+
+This ensures the model emphasizes underrepresented classes during training, mitigating imbalance issues.
+### 6. Why is it necessary to delete CSV and JSON files before starting a new training session on modified data?
+
+In this pipeline, if a CSV file already exists, the system will not generate a new one, and the same applies to JSON files. Therefore, if you make any changes to the `config.py` file that could affect the training data (e.g., data paths, preprocessing steps, or class distributions), it is necessary to manually delete the existing CSV and JSON files. This ensures that the changes are reflected in the newly generated training dataset.
+
+You can find the CSV and JSON files in the following directories:
+
+```
+root/data/csv
+```
+```
+root/data/json
+```
+
+Deleting these files before starting a new training session ensures that the training dataset is updated according to the latest configuration.
+### **7. How can I extract the mean and standard deviation from the `visualization.py` file, and why are these metrics important?**
+
+Normalization using mean and standard deviation ensures consistent input distributions, which stabilizes training and accelerates convergence. To extract the mean and standard deviation of your dataset, use the `calculate_average` function in the `visualization.ipynb` file. Follow these steps:
+
+#### **Steps to Calculate Mean and Standard Deviation**
+1. Prepare the input feature paths:
+   ```python
+   features_path = train_df["feature_ids"].to_list()
+   ```
+2. Compute the mean and standard deviation by running:
+   ```python
+   mean, std_dev = calculate_average(features_path)
+   ```
+
+3. Configure the computed mean and standard deviation in the `config.py` file. Use the dictionary format for datasets with different distributions:
+
+```python
+mean_std = {
+    "nir": [0.1495, 0.0825],
+    "red": [0.1836, 0.1195],
+    "swir": [0.152, 0.0876],
+    "vh+swir": [0.0356, 0.0824],
+    "vh": [-11.6673, 5.1528],
+    "vv": [-10.9157, 4.8009],
+    "vh-vv": [-10.066135, 4.200516],
+    "vv+swir": [0.75226486, 2.6914093]
+}
+
+mean = mean_std.get(dir_name)[0]  # Mean value based on `dir_name`
+std = mean_std.get(dir_name)[1]   # Standard deviation based on `dir_name`
+```
+### **8. How do I check the number of classes in the dataset?**
+
+To determine the number of classes in your dataset, use the `class_balance_check` function in the `visualization.ipynb` file. This function provides a breakdown of the unique classes along with their distribution.
+
+#### **Steps to Check the Number of Classes**
+1. Load the training dataset:
+   ```python
+   train_df = pd.read_csv(train_dir)
+   ```
+2. Execute the `class_balance_check` function:
+   ```python
+   class_balance_check(patchify=False, data_dir=train_df)
+   ```
+
+#### **Example Output**
+```plaintext
+Class percentage:
+class pixel: 1.0 = 27.747506680695906
+class pixel: 2.0 = 72.2524933193041
+Unique value in the mask dict_keys([1.0, 2.0])
+```
+
+#### **Interpreting the Output**
+In this example:
+- The dataset contains **2 unique classes** (1.0 and 2.0).
+- Update the `config.py` file accordingly:
+  ```python
+  num_classes = 2
+  ``` 
+
+This ensures that the model is correctly configured for the number of classes in your dataset.
+
 ### **10. What happens if `transfer_lr` is set to `False` and `load_model_name` is specified?**
 
 To enable transfer learning, `transfer_lr` must be set to `True`. Otherwise, the pipeline will proceed with **fine-tuning** if a pre-trained model is specified.
