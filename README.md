@@ -1,54 +1,23 @@
+### **10. What happens if `transfer_lr` is set to `False` and `load_model_name` is specified?**
 
-### 10. What steps are required to load a pre-trained model into the pipeline?
+To enable transfer learning, `transfer_lr` must be set to `True`. Otherwise, the pipeline will proceed with **fine-tuning** if a pre-trained model is specified.
 
-To load a pre-trained model into the pipeline, ensure the following steps are completed:
+If `transfer_lr = False` and a valid `load_model_name` is provided in the `config.py` file, the model will undergo **fine-tuning**. This means:
 
-1. **Enable Transfer Learning:**  
-   In the `config.py` file, set the `transfer_lr` variable to `True` to enable transfer learning:
-   ```python
-   transfer_lr = True
-   ```
+- The model will load the pre-trained weights from the specified file or directory in `load_model_name`.
+- All layers of the model will be trainable, allowing the training process to update the weights across the entire network.
+- Fine-tuning is particularly useful when adapting a pre-trained model to a similar task or dataset where additional training is required to optimize performance.
 
-2. **Specify the Pre-trained Model Name:**  
-   Provide the name of the pre-trained model in the `load_model_name` variable:
-   ```python
-   load_model_name = 'unet_ex_2024-12-02_e_10_p_2048_s_1024_nir.keras'
-   ```
+**Example:**
+```python
+dir_name = "vh-vv"  # Dataset name
+model_name = "unet"  # Model name
+load_model_name = "unet_ex_2024-12-03_e_2_p_2048_s_1024_vh-vv.keras"  # Load model name must match the actual file
+```
 
-3. **Set the Model Directory Path:**  
-   The pipeline automatically searches for the pre-trained model in the `logs/model/<model_name>` directory. Ensure that `load_model_dir` in the `config.py` is correctly defined:
-   ```python
-   load_model_dir = root_dir / "logs/model" / model_name
-   ```
+*For training from scratch, under no circumstances should `load_model_name` be present in the `load_model_dir`. Otherwise, the pipeline will use the pre-trained model.*
 
-4. **Model Compatibility:**  
-   Ensure that the pre-trained model's architecture matches the architecture defined by the `model_name` variable in `config.py`. For instance:
-   ```python
-   model_name = "unet"  # The architecture of the pre-trained model must match this
-   ```
-
-5. **Prediction Directories:**  
-   Once the pre-trained model is loaded, predictions during testing, evaluation, and validation phases are saved in the following directories:
-   - For testing: 
-     ```
-     root_dir/logs/prediction/<model_name>/test/<experiment_name>
-     ```
-   - For evaluation: 
-     ```
-     root_dir/logs/prediction/<model_name>/eval/<experiment_name>
-     ```
-   - For validation:
-     ```
-     root_dir/logs/prediction/<model_name>/validation/<experiment_name>
-     ```
-
-6. **Experiment Tracking:**  
-   The `experiment` variable in `config.py` tracks the current experiment and ensures proper logging of model predictions and checkpoints:
-   ```python
-   experiment = f"{str(date.today())}_e_{epochs}_p_{patch_size}_s_{stride}_{dir_name}"
-   ```
-
-When these configurations are correctly set, the pipeline will automatically load the specified pre-trained model and perform transfer learning. This approach leverages pre-trained weights for faster convergence and improved performance on specific tasks.
+If `load_model_name` is not provided, the model will be trained from scratch.
 
 ### 12. What is the process for adding data augmentation to the pipeline?
   
